@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skincare Ingredient Reference</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap');
+
+  :root {
+    --bg: #0a0907;
+    --bg2: #111009;
+    --bg3: #181510;
+    --border: #2a2318;
+    --border2: #3a3020;
+    --text: #e8ddd0;
+    --text2: #b8aa98;
+    --text3: #7a6a58;
+    --accent: #c4956a;
+    --accent2: #8aad8a;
+    --accent3: #8aadc4;
+    --warn: #c4957a;
+    --tag-bg: #1e1a14;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    padding: 0;
+    min-height: 100vh;
+  }
+
+  /* Header */
+  header {
+    padding: 60px 48px 48px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 20% 50%, rgba(196,149,106,0.06) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(138,173,138,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  .subtitle {
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text3);
+  }
+
+  /* Search */
+  .search-wrap {
+    padding: 24px 48px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: rgba(10,9,7,0.95);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .search-input {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    padding: 10px 16px;
+    border-radius: 2px;
+    outline: none;
+    width: 280px;
+    letter-spacing: 0.05em;
+    transition: border-color 0.2s;
+  }
+
+  .search-input::placeholder { color: var(--text3); }
+  .search-input:focus { border-color: var(--accent); }
+
+  .filter-btn {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    color: var(--text3);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 10px 16px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .filter-btn.active-avoid {
+    border-color: var(--warn);
+    color: var(--warn);
+  }
+
+  /* Layout */
+  .content {
+    padding: 48px;
+    max-width: 1100px;
+  }
+
+  /* Section headers */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    margin-top: 56px;
+  }
+
+  .section-header:first-child { margin-top: 0; }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text);
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .section-count {
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--text3);
+    text-transform: uppercase;
+  }
+
+  /* Alphabet index */
+  .alpha-group {
+    margin-bottom: 40px;
+  }
+
+  .alpha-letter {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--border2);
+    line-height: 1;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Ingredient cards */
+  .ingredient {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 24px;
+    transition: background 0.15s;
+  }
+
+  .ingredient:last-child { border-bottom: none; }
+
+  .ingredient:hover {
+    background: rgba(196,149,106,0.02);
+    margin: 0 -16px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .ingredient-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.3;
+    padding-top: 2px;
+  }
+
+  .ingredient-aka {
+    font-size: 0.55rem;
+    color: var(--text3);
+    letter-spacing: 0.1em;
+    margin-top: 4px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .ingredient-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 8px;
+  }
+
+  .tag {
+    font-size: 0.48rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 1px;
+    background: var(--tag-bg);
+    border: 1px solid var(--border2);
+    color: var(--text3);
+  }
+
+  .tag.anti-aging { border-color: #c4956a44; color: #c4956a; }
+  .tag.barrier { border-color: #8aad8a44; color: #8aad8a; }
+  .tag.anti-acne { border-color: #8aadc444; color: #8aadc4; }
+  .tag.hydration { border-color: #ad8ac444; color: #ad8ac4; }
+  .tag.anti-inflammatory { border-color: #c4ad8a44; color: #c4ad8a; }
+  .tag.brightening { border-color: #c4c48a44; color: #c4c48a; }
+  .tag.spf { border-color: #c48aad44; color: #c48aad; }
+  .tag.caution { border-color: #c4957a44; color: #c4957a; }
+
+  .ingredient-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .ingredient-what {
+    color: var(--text2);
+    font-size: 0.72rem;
+    line-height: 1.6;
+  }
+
+  .ingredient-benefit {
+    color: var(--text3);
+    font-size: 0.68rem;
+    line-height: 1.6;
+  }
+
+  .skin-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.6rem;
+    color: var(--warn);
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+    padding: 4px 10px;
+    background: rgba(196,149,122,0.08);
+    border: 1px solid rgba(196,149,122,0.2);
+    border-radius: 1px;
+  }
+
+  .skin-note::before { content: '⚠'; font-size: 0.7rem; }
+
+  .related-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.6rem;
+    color: var(--accent2);
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+    padding: 4px 10px;
+    background: rgba(138,173,138,0.06);
+    border: 1px solid rgba(138,173,138,0.2);
+    border-radius: 1px;
+  }
+
+  .related-note::before { content: '↗'; font-size: 0.7rem; }
+
+  /* Group card for related ingredients */
+  .ingredient-group {
+    background: rgba(138,173,138,0.03);
+    border: 1px solid rgba(138,173,138,0.12);
+    border-radius: 2px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+
+  .group-label {
+    font-size: 0.52rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(138,173,138,0.15);
+  }
+
+  .group-label::before { content: '⬡ '; }
+
+  /* Avoid section */
+  .avoid-ingredient {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 24px;
+  }
+
+  .avoid-ingredient:last-child { border-bottom: none; }
+
+  .avoid-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--text2);
+  }
+
+  .avoid-body {
+    font-size: 0.68rem;
+    color: var(--text3);
+    line-height: 1.6;
+  }
+
+  /* Hidden for search */
+  .hidden { display: none !important; }
+
+  /* Jump nav */
+  .jump-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 16px 48px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+  }
+
+  .jump-link {
+    font-size: 0.6rem;
+    color: var(--text3);
+    text-decoration: none;
+    padding: 3px 6px;
+    border-radius: 1px;
+    transition: color 0.15s;
+    letter-spacing: 0.08em;
+  }
+
+  .jump-link:hover { color: var(--accent); }
+
+  @media (max-width: 700px) {
+    header, .content, .search-wrap, .jump-nav { padding-left: 20px; padding-right: 20px; }
+    .ingredient, .avoid-ingredient { grid-template-columns: 1fr; gap: 8px; }
+    .alpha-letter { font-size: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Skincare Ingredient<br>Reference Guide</h1>
+  <p class="subtitle">Compiled from your skincare research · personalized notes included</p>
+</header>
+
+<div class="jump-nav">
+  <a class="jump-link" href="#A">A</a>
+  <a class="jump-link" href="#B">B</a>
+  <a class="jump-link" href="#C">C</a>
+  <a class="jump-link" href="#D">D</a>
+  <a class="jump-link" href="#G">G</a>
+  <a class="jump-link" href="#H">H</a>
+  <a class="jump-link" href="#J">J</a>
+  <a class="jump-link" href="#L">L</a>
+  <a class="jump-link" href="#N">N</a>
+  <a class="jump-link" href="#P">P</a>
+  <a class="jump-link" href="#R">R</a>
+  <a class="jump-link" href="#S">S</a>
+  <a class="jump-link" href="#T">T</a>
+  <a class="jump-link" href="#V">V</a>
+  <a class="jump-link" href="#Z">Z</a>
+  <a class="jump-link" href="#C-centella">Centella ↗</a>
+  <span style="color:var(--border2); margin: 0 4px;">|</span>
+  <a class="jump-link" href="#functional" style="color: var(--warn);">Functional-only →</a>
+</div>
+
+<div class="search-wrap">
+  <input class="search-input" type="text" placeholder="Search ingredients..." id="searchInput" oninput="filterIngredients()">
+  <button class="filter-btn" onclick="filterByTag('all')">All</button>
+  <button class="filter-btn" onclick="filterByTag('anti-acne')">Acne</button>
+  <button class="filter-btn" onclick="filterByTag('barrier')">Barrier</button>
+  <button class="filter-btn" onclick="filterByTag('anti-aging')">Anti-aging</button>
+  <button class="filter-btn" onclick="filterByTag('anti-inflammatory')">Inflammation</button>
+  <button class="filter-btn" onclick="filterByTag('hydration')">Hydration</button>
+  <button class="filter-btn" onclick="filterByTag('brightening')">Brightening</button>
+</div>
+
+<div class="content">
+
+  <!-- ==================== BENEFICIAL INGREDIENTS ==================== -->
+  <div class="section-header">
+    <h2 class="section-title">Beneficial Ingredients</h2>
+    <div class="section-line"></div>
+    <span class="section-count">A – Z</span>
+  </div>
+
+  <!-- A -->
+  <div class="alpha-group" id="A">
+    <div class="alpha-letter">A</div>
+
+    <div class="ingredient" data-tags="anti-acne anti-inflammatory brightening">
+      <div>
+        <div class="ingredient-name">Azelaic Acid</div>
+        <div class="ingredient-aka">found in: Anua serum</div>
+        <div class="ingredient-tags">
+          <span class="tag anti-acne">anti-acne</span>
+          <span class="tag anti-inflammatory">anti-inflammatory</span>
+          <span class="tag brightening">brightening</span>
+        </div>
+      </div>
+      <div class="ingredient-body">
+        <div class="ingredient-what">A naturally occurring acid found in grains. One of the most uniquely suited ingredients for your specific situation.</div>
+        <div class="ingredient-benefit">Kills P. acnes bacteria · Inhibits 5-alpha-reductase (the enzyme that converts testosterone to DHT, the androgen driving your hormonal acne) · Directly calms inflammatory pathways · Fades post-acne hyperpigmentation · Mild exfoliant · Works through two separate anti-inflammatory mechanisms simultaneously</div>
+        <div class="related-note">Works synergistically with zinc and vitamin B6 for DHT inhibition</div>
+      </div>
+    </div>
+
+    <div class="ingredient" data-tags="anti-aging anti-inflammatory">
+      <div>
+        <div class="ingredient-name">Adenosine</div>
+        <div class="ingredient-aka">found in: Anua serum</div>
+        <div class="ingredient-tags">
+          <span class="tag anti-aging">anti-aging</span>
+          <span class="tag anti-inflammatory">anti-inflammatory</span>
+        </div>
+      </div>
+      <div class="ingredient-body">
+        <div class="ingredient-what">A naturally occurring molecule present in all living cells.</div>
+        <div class="ingredient-benefit">Supports collagen synthesis · Anti-inflammatory properties · Helps with wound healing · Improves skin elasticity over time</div>
+      </div>
+    </div>
+
+    <div class="ingredient" data-tags="anti-inflammatory hydration">
+      <div>
+        <div class="ingredient-name">Aloe Barbadensis (Aloe Vera)</div>
+        <div class="ingredient-aka">found in: Cetaphil SPF, Rejuran</div>
+        <div class="ingredient-tags">
+          <span class="tag anti-inflammatory">anti-inflammatory</span>
+          <span class="tag hydration">hydration</span>
+        </div>
+      </div>
+      <div class="ingredient-body">
+        <div class="ingredient-what">Plant extract with a long history of use for soothing skin.</div>
+        <div class="ingredient-benefit">Calming and soothing · Hydrating · Mildly anti-inflammatory · Good addition in SPF for your inflamed skin</div>
+      </div>
+    </div>
+
+    <div class="ingredient" data-tags="anti-inflammatory">
+      <div>
+        <div class="ingredient-name">Alpha-Bisabolol</div>
+        <div class="ingredient-aka">also: Bisabolol · found in: Rejuran, CeraVe PM</div>
+        <div class="ingredient-tags">
+          <span class="tag anti-inflammatory">anti-inflammatory</span>
+        </div>
+      </div>
+      <div class="ingredient-body">
+        <div class="ingredient-what">The isolated, purified active molecule extracted from chamomile. More potent and consistent than whole chamomile extract because you get a precise concentration of just the active compound.</div>
+        <div class="ingredient-benefit">Anti-inflammatory · Soothing · Helps calm redness · Supports wound healing · Gentle enough for sensitive skin</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- B -->
+  <div class="alpha-group" id="B">
+    <div class="alpha-letter">B</div>
+
+    <div class="ingredient" data-tags="anti-acne">
+      <div>
+        <div class="ingredient-name">Benzoyl Peroxide</div>
+        <div class="ingredient-aka">found in: Neutrogena On-The-Spot 2.5%</div>
+        <div class="ingredient-tags">
+          <span class="tag anti-acne">anti-acne</span>
+        </div>
+      </div>
+      <div class="ingredient-body">
+        <div class="ingredient-what">An oxidizing agent used as a spot treatment. One of the most evidence-backed topical acne treatments available.</div>
+        <div class="ingredient-benefit">Bactericidal — kills P. acnes by flooding the pore with oxygen, which is toxic to the anaerobic bacteria · Does not cause antibiotic resistance (unlike topical antibiotics) · 2.5% is as effective as 10% with significantly less irritation · When combined with blue LED therapy, reduces inflammatory lesions by up to 79% in studies</div>
+        <div class="skin-note">Photosensitive to UV light — use at night only. Apply on bare skin before other products.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- C -->
+  <div class="alpha-group" id="C">
+    <div class="alpha-letter">C</div>
+
+    <!-- CERAMIDE GROUP -->
+    <div class="ingredient-group">
+      <div class="group-label">Barrier Trio — these three work together to rebuild your skin barrier. Ceramides are the structure, cholesterol is the mortar, phytosphingosine is the raw material your skin uses to make more ceramides.</div>
+
+      <div class="ingredient" data-tags="barrier" style="border-bottom: 1px solid rgba(138,173,138,0.1);">
+        <div>
+          <div class="ingredient-name">Ceramides (NP, AP, EOP)</div>
+          <div class="ingredient-aka">found in: CeraVe PM, Amazon Retinol Serum, CeraVe Body Lotion, CeraVe Body Wash</div>
+          <div class="ingredient-tags">
+            <span class="tag barrier">barrier</span>
+          </div>
+        </div>
+        <div class="ingredient-body">
+          <div class="ingredient-what">Lipid molecules that make up approximately 50% of the mortar between your skin cells. Your skin barrier is structured like a brick wall — ceramides are the mortar.</div>
+          <div class="ingredient-benefit">Directly replenishes the lipids your barrier is literally made of · Prevents moisture loss · Keeps irritants and bacteria out · Three types (NP, AP, EOP) work together for complete barrier repair · Essential for compromised or inflamed skin</div>
+          <div class="related-note">Require cholesterol and phytosphingosine to function optimally</div>
+        </div>
+      </div>
+
+      <div class="ingredient" data-tags="barrier" style="border-bottom: 1px solid rgba(138,173,138,0.1);">
+        <div>
+          <div class="ingredient-name">Cholesterol</div>
+          <div class="ingredient-aka">found in: CeraVe PM, Amazon Retinol Serum, CeraVe Body Wash</div>
+          <div class="ingredient-tags">
+            <span class="tag barrier">barrier</span>
+          </div>
+        </div>
+        <div class="ingredient-body">
+          <div class="ingredient-what">A lipid that forms part of your skin barrier's structural mortar alongside ceramides and fatty acids.</div>
+          <div class="ingredient-benefit">Works synergistically with ceramides — without cholesterol the barrier structure doesn't hold properly regardless of ceramide levels · Makes up roughly 25% of the skin barrier lipid ratio · Essential structural partner to ceramides</div>
+          <div class="related-note">Part of the barrier trio with ceramides and phytosphingosine</div>
+        </div>
+      </div>
+
+      <div class="ingredient" data-tags="barrier" style="border-bottom: none;">
+        <div>
+          <div class="ingredient-name">Phytosphingosine</div>
+          <div class="ingredient-aka">found in: CeraVe PM, Amazon Retinol Serum, CeraVe Body Wash</div>
+          <div class="ingredient-tags">
+            <span class="tag barrier">barrier</span>
+          </div>
+        </div>
+        <div class="ingredient-body">
+          <div class="ingredient-what">A precursor molecule — meaning your skin uses it as raw material to manufacture its own ceramides internally.</div>
+          <div class="ingredient-benefit">Enables your skin to build ceramides from scratch rather than just receiving them topically · More bioavailable than ceramides alone · Supports long-term barrier self-repair · Antimicrobial properties</div>
+          <div class="related-note">Part of the barrier trio with ceramides and cholesterol</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CENTELLA GROUP -->
+  <div class="alpha-group" id="C-centella">
+    <div class="ingredient-group">
+      <div class="group-label">Centella Asiatica Family — a plant extract and its isolated active compounds. Found across multiple products in your routine. Each form has different potency and specificity.</div>
+
+      <div class="ingredient" data-tags="anti-inflammatory barrier anti-aging" style="border-bottom: 1px solid rgba(138,173,138,0.1);">
+        <div>
+          <div class="ingredient-name">Centella Asiatica Extract</div>
+          <div class="ingredient-aka">also: Gotu Kola · found in: Nécessaire Body Wash, Drunk Elephant Sili Whipped, Cetaphil Firming Lotion, Cicaplast Balm</div>
+          <div class="ingredient-tags">
+            <span class="tag anti-inflammatory">anti-inflammatory</span>
+            <span class="tag barrier">barrier</span>
+            <span class="tag anti-aging">anti-aging</span>
+          </div>
+        </div>
+        <div class="ingredient-body">
+          <div class="ingredient-what">A whole plant extract from Centella Asiatica, a herb used in traditional Asian medicine for centuries. Contains multiple active triterpenoid compounds including madecassoside, asiaticoside, asiatic acid, and madecassic acid.</div>
+          <div class="ingredient-benefit">Stimulates collagen synthesis · Directly suppresses inflammatory cytokines · Accelerates wound healing · Strengthens skin barrier · Improves skin texture over time · Well studied in both traditional and modern dermatological research · Works on inflammation through different pathways than niacinamide making them complementary when used together</div>
+        </div>
+      </div>
+
+      <div class="ingredient" data-tags="anti-inflammatory barrier anti-aging" style="border-bottom: 1px solid rgba(138,173,138,0.1);">
+        <div>
+          <div class="ingredient-name">Madecassoside</div>
+          <div class="ingredient-aka">isolated active from Centella Asiatica · found in: Cicaplast Balm B5+</div>
+          <div class="ingredient-tags">
+            <span class="tag anti-inflammatory">anti-inflammatory</span>
+            <span class="tag barrier">barrier</span>
+            <span class="tag anti-aging">anti-aging</span>
+          </div>
+        </div>
+        <div class="ingredient-body">
+          <div class="ingredient-what">The most studied and potent isolated active compound from Centella Asiatica. The "cica" in Cicaplast refers to cicatrization — the French medical term for wound healing — built around this ingredient.</div>
+          <div class="ingredient-benefit">More potent and consistent than whole centella extract — isolated form means precise concentration · Strongly promotes wound healing and tissue repair · Significant anti-inflammatory activity · Stimulates collagen and elastin production · Helps repair damaged skin barrier · Particularly useful post-procedure or on compromised skin</div>
+          <div class="related-note">Works alongside asiaticoside and asiatic acid in the centella family</div>
+        </div>
+      </div>
+
+      <div class="ingredient" data-tags="anti-inflammatory anti-aging" style="border-bottom: none;">
+        <div>
+          <div class="ingredient-name">Asiaticoside / Asiatic Acid</div>
+          <div class="ingredient-aka">additional actives from Centella Asiatica</div>
+          <div class="ingredient-tags">
+            <span class="tag anti-inflammatory">anti-inflammatory</span>
+            <span class="tag anti-aging">anti-aging</span>
+          </div>
+        </div>
+        <div class="ingredient-body">
+          <div class="ingredient-what">Two other key triterpenoid compounds found in centella asiatica alongside madecassoside. Work synergistically with it rather than as standalone ingredients.</div>
+          <div class="ingredient-benefit">Collagen synthesis stimulation · Anti-inflammatory · Wound healing support · Antioxidant properties · Typically present when whole centella extract is listed rather than isolated madecassoside</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- G -->
+  <div class="alpha-group" id="G">
+    <div class="alpha-letter">G</div>
+
+    <div class="ingredient" data-tags="hydration">
+      <div>
+        <div class="ingredient-name">Glycerin</div>
+        <div class="ingredient-aka">found in: CeraVe PM, Rejuran, CeraVe Body Lotion</div>
+        <div class="ingredient-tags">
+          <span class="tag hydration">hydration</span>
+        </div>
+      </div>
+      <div class="ingredient-body">
+        <div class="ingredient-what">A humectant — draws moisture from the surrounding environment into your skin.</div>
+        <div class="ingredient-benefit">Highly effective hydration · Works especially well in humid climates like Florida where there's abundant atmospheric moisture to draw from · Non-comedogenic · Well tolerated by all skin types · Very well studied</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- H -->
+  <div class="alpha-group" id="H">
+    <div class="alpha-letter">H</div>
+
+    <div class="ingredient" data-tags="hydration">
+      <div>
+        <div class="ingredient-name">Hyaluronic Acid</div>
+        <div class="ingredient-aka">also: Sodium Hyaluronate · found in: Anua serum, CeraVe PM, Rejuran, CeraVe Body Wash</div>
+        <div class="ingredient-tags">
+          <span class="tag hydration">hydration</span>
+        </div>
+      </div>
+      <div class="ingredient-body">
+        <div class="ingredient-what">A naturally occurring molecule already present in your skin and connective tissue. A humectant that holds up to 1000x its weight in water.</div>
+        <div class="ingredient-benefit">Draws moisture into skin · Works especially well in humid environments — Florida's humidity means it always has atmospheric moisture to pull from · Plumps the appearance of skin · Non-comedogenic · Sodium hyaluronate is a smaller molecular form that penetrates more easily</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- J -->
+  <div class="alpha-group" id="J">
+    <div class="alpha-letter">J</div>
+
+    <div class="ingredient" data-tags="barrier hydration">
+      <div>
+        <div class="ingredient-name">Jojoba Seed Oil</div>
+        <div class="ingredient-aka">INCI: Simmondsia Chinensis Seed Oil · found in: Rejuran</div>
+        <div class="ingredient-tags">
+          <span class="tag barrier">barrier</span>
+          <span class="tag hydration">hydration</span>
+        </div>
+      </div>
+      <div class="ingredient-body">
+        <div class="ingredient-what">Technically a liquid wax rather than an oil, structurally similar to your skin's own sebum.</div>
+        <div class="ingredient-benefit">Mimics sebum so skin recognizes it easily · Non-comedogenic · Can signal skin to reduce its own sebum production · Barrier supportive</div>
+        <div class="skin-note">In combination with other heavy oils in Rejuran, may be too occlusive for your oily acne-prone skin type.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- L -->
+  <div class="alpha-group" id="L">
+    <div class="alpha-letter">L</div>
+
+    <div class="ingredient" data-tags="anti-aging hydration">
+      <div>
+        <div class="ingredient-name">Lactic Acid</div>
+        <div class="ingredient-aka">not currently in your routine — for future consideration</div>
+        <div class="ingredient-tags">
+          <span class="tag anti-aging">anti-aging</span>
+          <span class="tag hydration">hydration</span>
+        </div>
+      </div>
+      <div class="ingredient-body">
+        <div class="ingredient-what">An AHA (alpha hydroxy acid) exfoliant, but uniquely also a humectant. Larger molecule than glycolic acid so penetrates more slowly and gently.</div>
+        <div class="ingredient-benefit">Gently exfoliates dead skin cells · Simultaneously hydrates while exfoliating — unlike other AHAs · Less irritating than glycolic acid · Best exfoliant option for sensitive or inflamed skin when you're ready to reintroduce exfoliation · Helps with cell turnover and brightening</div>
+        <div class="skin-note">Hold off until skin is more stable. Reintroduce at low percentage once weekly.</div>
+      </div>
+    </div>
+
+    <div class="ingredient" data-tags="brightening anti-inflammatory">
+      <div>
+        <div class="ingredient-name">Licorice Root Extract</div>
+        <div class="ingredient-aka">INCI: Glycyrrhiza Glabra Root Extract · found in: Amazon Retinol Serum, Rejuran</div>
+        <div class="ingredient-tags">
+          <span class="tag brightening">brightening</span>
+          <span class="tag anti-inflammatory">anti-inflammatory</span>
+        </div>
+      </div>
+      <div class="ingredient-body">
+        <div class="ingredient-what">A plant extract with well-documented skin brightening and soothing properties.</div>
+        <div class="ingredient-benefit">Inhibits melanin production · Fades post-acne dark spots and hyperpigmentation · Anti-inflammatory · Antioxidant properties · Gentle enough for sensitive skin</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- N -->
+  <div class="alpha-group" id="N">
+    <div class="alpha-letter">N</div>
+
+    <div class="ingredient" data-tags="anti-acne anti-inflammatory brightening barrier">
+      <div>
+        <div class="ingredient-name">Niacinamide</div>
+        <div class="ingredient-aka">Vitamin B3 · found in: CeraVe PM, Amazon Retinol Serum, EltaMD SPF</div>
+        <div class="ingredient-tags">
+          <span class="tag anti-acne">anti-acne</span>
+          <span class="tag anti-inflammatory">anti-inflammatory</span>
+          <span class="tag brightening">brightening</span>
+          <span class="tag barrier">barrier</span>
+        </div>
+      </div>
+      <div class="ingredient-body">
+        <div class="ingredient-what">One of the most versatile and well-studied skincare ingredients. A form of vitamin B3 with multiple simultaneous benefits.</div>
+        <div class="ingredient-benefit">Reduces sebum production — clinically proven in double-blind trials · Calms inflammation · Inhibits melanin transfer between cells (fades dark spots) · Strengthens skin barrier · Reduces pore appearance · Well tolerated · Works at the epidermis level · Clinically significant sebum reduction seen at 2-6 weeks in studies</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- P -->
+  <div class="alpha-group" id="P">
+    <div class="alpha-letter">P</div>
+
+    <div class="ingredient" data-tags="anti-inflammatory barrier">
+      <div>
+        <div class="ingredient-name">Panthenol</div>
+        <div class="ingredient-aka">Provitamin B5 · found in: Rejuran</div>
+        <div class="ingredient-tags">
+          <span class="tag anti-inflammatory">anti-inflammatory</span>
+          <span class="tag barrier">barrier</span>
+        </div>
+      </div>
+      <div class="ingredient-body">
+        <div class="ingredient-what">A provitamin that converts to pantothenic acid in the skin. Well tolerated and gentle.</div>
+        <div class="ingredient-benefit">Anti-inflammatory · Helps barrier heal and regenerate · Retains moisture · Soothing · Supports wound healing · Good for compromised or irritated skin</div>
+      </div>
+    </div>
+
+    <!-- PEPTIDE GROUP -->
+    <div class="ingredient-group">
+      <div class="group-label">Peptides — short chains of amino acids that act as signaling molecules, telling skin cells to perform specific functions like producing collagen</div>
+
+      <div class="ingredient" data-tags="anti-aging" style="border-bottom: 1px solid rgba(138,173,138,0.1);">
+        <div>
+          <div class="ingredient-name">Palmitoyl Tripeptide-1</div>
+          <div class="ingredient-aka">found in: ZO Eye Cream</div>
+          <div class="ingredient-tags">
+            <span class="tag anti-aging">anti-aging</span>
+          </div>
+        </div>
+        <div class="ingredient-body">
+          <div class="ingredient-what">A peptide that signals fibroblasts to produce more collagen.</div>
+          <div class="ingredient-benefit">Stimulates collagen synthesis · Improves skin firmness and elasticity · Works synergistically with palmitoyl tetrapeptide-7</div>
+          <div class="related-note">Works in combination with Palmitoyl Tetrapeptide-7</div>
+        </div>
+      </div>
+
+      <div class="ingredient" data-tags="anti-aging" style="border-bottom: 1px solid rgba(138,173,138,0.1);">
+        <div>
+          <div class="ingredient-name">Palmitoyl Tetrapeptide-7</div>
+          <div class="ingredient-aka">found in: ZO Eye Cream</div>
+          <div class="ingredient-tags">
+            <span class="tag anti-aging">anti-aging</span>
+          </div>
+        </div>
+        <div class="ingredient-body">
+          <div class="ingredient-what">A peptide that works synergistically with tripeptide-1 for collagen stimulation.</div>
+          <div class="ingredient-benefit">Collagen synthesis signaling · Reduces inflammation · Improves skin elasticity · One of the better studied peptide combinations</div>
+          <div class="related-note">Works in combination with Palmitoyl Tripeptide-1</div>
+        </div>
+      </div>
+
+      <div class="ingredient" data-tags="anti-aging" style="border-bottom: 1px solid rgba(138,173,138,0.1);">
+        <div>
+          <div class="ingredient-name">Acetyl Tetrapeptide-5</div>
+          <div class="ingredient-aka">found in: ZO Eye Cream</div>
+          <div class="ingredient-tags">
+            <span class="tag anti-aging">anti-aging</span>
+          </div>
+        </div>
+        <div class="ingredient-body">
+          <div class="ingredient-what">A peptide specifically studied for the eye area, targeting puffiness and dark circles.</div>
+          <div class="ingredient-benefit">Reduces dark circles · Decreases under-eye puffiness · Improves lymphatic drainage in the eye area · Works on fluid accumulation specifically</div>
+        </div>
+      </div>
+
+      <div class="ingredient" data-tags="anti-aging barrier anti-inflammatory" style="border-bottom: none;">
+        <div>
+          <div class="ingredient-name">GHK-Cu (Copper Peptide)</div>
+          <div class="ingredient-aka">Glycyl-L-Histidyl-L-Lysine Copper · prescribed injectable</div>
+          <div class="ingredient-tags">
+            <span class="tag anti-aging">anti-aging</span>
+            <span class="tag barrier">barrier</span>
+            <span class="tag anti-inflammatory">anti-inflammatory</span>
+          </div>
+        </div>
+        <div class="ingredient-body">
+          <div class="ingredient-what">A naturally occurring copper-binding peptide that declines significantly with age. Prescribed to you as a daily injectable, delivering it systemically at concentrations topical application cannot match.</div>
+          <div class="ingredient-benefit">Stimulates collagen and elastin synthesis systemically · Accelerates wound healing and tissue repair · Anti-inflammatory effects throughout the body · Supports skin barrier repair · Antioxidant properties · Injectable form bypasses skin barrier entirely — acts at a fundamentally different level than topical peptides · Works synergistically with your topical retinol — retinol stimulates collagen locally while GHK-Cu works systemically · Reduces urgency of needing retinol specifically in body lotion since collagen support is already addressed from inside</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ingredient" data-tags="anti-aging barrier">
+      <div>
+        <div class="ingredient-name">PDRN (Polydeoxyribonucleotide)</div>
+        <div class="ingredient-aka">also: Hydrolyzed DNA, Salmon DNA · found in: Rejuran</div>
+        <div class="ingredient-tags">
+          <span class="tag anti-aging">anti-aging</span>
+          <span class="tag barrier">barrier</span>
+        </div>
+      </div>
+      <div class="ingredient-body">
+        <div class="ingredient-what">DNA fragments derived from salmon sperm. Has clinical backing for wound healing and tissue repair, used in injectable treatments in Korea before being adopted in topicals.</div>
+        <div class="ingredient-benefit">Tissue repair · Barrier support · Collagen stimulation · Anti-inflammatory · Particularly beneficial post-procedure (explains why Rejuran is popular post-microneedling)</div>
+        <div class="skin-note">Rejuran's heavy oil base makes it less ideal for your oily acne-prone skin despite this ingredient being beneficial.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- R -->
+  <div class="alpha-group" id="R">
+    <div class="alpha-letter">R</div>
+
+    <!-- RETINOID GROUP -->
+    <div class="ingredient-group">
+      <div class="group-label">Retinoid Family — all vitamin A derivatives. All ultimately work by binding to retinoic acid receptors in skin cells. Differ only in how many conversion steps are needed before becoming active. Fewer steps = faster acting = more potent = more irritating.</div>
+
+      <div class="ingredient" data-tags="anti-aging anti-acne" style="border-bottom: 1px solid rgba(138,173,138,0.1);">
+        <div>
+          <div class="ingredient-name">Retinol</div>
+          <div class="ingredient-aka">found in: Amazon Retinol Serum, ZO Eye Cream</div>
+          <div class="ingredient-tags">
+            <span class="tag anti-aging">anti-aging</span>
+            <span class="tag anti-acne">anti-acne</span>
+          </div>
+        </div>
+        <div class="ingredient-body">
+          <div class="ingredient-what">Over-the-counter vitamin A derivative. Requires two enzymatic conversion steps before becoming active retinoic acid: retinol → retinaldehyde → retinoic acid.</div>
+          <div class="ingredient-benefit">Accelerates cell turnover · Stimulates collagen production in dermis · Reduces sebaceous gland activity · Fades hyperpigmentation · Reduces acne · Results appear at 3-6 months, best results at 6-12 months · More gradual and gentle than tretinoin due to conversion process · Use at night only — photosensitive</div>
+          <div class="related-note">Tretinoin is the fully active form — same destination, faster path</div>
+        </div>
+      </div>
+
+      <div class="ingredient" data-tags="anti-aging anti-acne" style="border-bottom: 1px solid rgba(138,173,138,0.1);">
+        <div>
+          <div class="ingredient-name">Tretinoin</div>
+          <div class="ingredient-aka">Retinoic acid · prescription only</div>
+          <div class="ingredient-tags">
+            <span class="tag anti-aging">anti-aging</span>
+            <span class="tag anti-acne">anti-acne</span>
+          </div>
+        </div>
+        <div class="ingredient-body">
+          <div class="ingredient-what">Prescription retinoid. Already in its fully active retinoic acid form — zero conversion steps needed. Binds to receptors immediately on contact.</div>
+          <div class="ingredient-benefit">Same benefits as retinol but significantly faster and more potent · Produces equivalent anti-aging results in approximately one third the time · More powerful sebum suppression — better for hormonal acne specifically · Gold standard for both acne and anti-aging · You've used it before with good results</div>
+          <div class="skin-note">Purging phase (skin looks worse before better) lasts 4-8 weeks. Worth discussing with your endocrinologist.</div>
+        </div>
+      </div>
+
+      <div class="ingredient" data-tags="anti-aging anti-acne" style="border-bottom: none;">
+        <div>
+          <div class="ingredient-name">Retinaldehyde</div>
+          <div class="ingredient-aka">Retinal · OTC, less common</div>
+          <div class="ingredient-tags">
+            <span class="tag anti-aging">anti-aging</span>
+            <span class="tag anti-acne">anti-acne</span>
+          </div>
+        </div>
+        <div class="ingredient-body">
+          <div class="ingredient-what">One conversion step from active retinoic acid. Middle ground between retinol and tretinoin, still available over the counter.</div>
+          <div class="ingredient-benefit">Significantly more potent than retinol · More gentle than tretinoin · Good option if retinol feels insufficient but tretinoin isn't accessible · Less common in products</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- S -->
+  <div class="alpha-group" id="S">
+    <div class="alpha-letter">S</div>
+
+    <div class="ingredient" data-tags="barrier hydration">
+      <div>
+        <div class="ingredient-name">Shea Butter</div>
+        <div class="ingredient-aka">INCI: Butyrospermum Parkii · found in: Rejuran</div>
+        <div class="ingredient-tags">
+          <span class="tag barrier">barrier</span>
+          <span class="tag hydration">hydration</span>
+        </div>
+      </div>
+      <div class="ingredient-body">
+        <div class="ingredient-what">A rich plant-derived fat that is highly occlusive and nourishing.</div>
+        <div class="ingredient-benefit">Excellent for dry skin · Deeply nourishing · Strong barrier occlusion · Rich in fatty acids</div>
+        <div class="skin-note">Too heavy and occlusive for your oily, acne-prone skin type. Can contribute to congestion. Better suited to dry skin types.</div>
+      </div>
+    </div>
+
+    <div class="ingredient" data-tags="barrier hydration anti-acne">
+      <div>
+        <div class="ingredient-name">Squalane</div>
+        <div class="ingredient-aka">found in: Rejuran, Amazon Retinol Serum</div>
+        <div class="ingredient-tags">
+          <span class="tag barrier">barrier</span>
+          <span class="tag hydration">hydration</span>
+          <span class="tag anti-acne">anti-acne</span>
+        </div>
+      </div>
+      <div class="ingredient-body">
+        <div class="ingredient-what">A lightweight oil derived from olives or sugarcane that mimics your skin's natural sebum. Non-comedogenic.</div>
+        <div class="ingredient-benefit">Mimics sebum so skin absorbs it easily · Paradoxically can reduce sebum production — skin senses adequate surface lipids and compensates by producing less of its own · Non-comedogenic — doesn't block pores · Barrier supportive · Lightweight enough for oily skin types</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- T -->
+  <div class="alpha-group" id="T">
+    <div class="alpha-letter">T</div>
+
+    <div class="ingredient" data-tags="anti-aging">
+      <div>
+        <div class="ingredient-name">Tocopheryl Acetate / Tocopherol</div>
+        <div class="ingredient-aka">Vitamin E · found in: ZO Eye Cream, CeraVe Body Wash</div>
+        <div class="ingredient-tags">
+          <span class="tag anti-aging">anti-aging</span>
+          <span class="tag anti-inflammatory">anti-inflammatory</span>
+        </div>
+      </div>
+      <div class="ingredient-body">
+        <div class="ingredient-what">Vitamin E in topical form. Tocopherol is the pure form; tocopheryl acetate is the more stable ester form. Both are antioxidants.</div>
+        <div class="ingredient-benefit">Neutralizes free radicals before they can break down collagen · Protects against oxidative damage from UV, pollution, and blue light · Helps stabilize other antioxidants · Tocopherol is more immediately active; tocopheryl acetate is more stable in formula · Oral vitamin E also contributes to skin health systemically</div>
+      </div>
+    </div>
+
+    <div class="ingredient" data-tags="spf anti-inflammatory">
+      <div>
+        <div class="ingredient-name">Titanium Dioxide</div>
+        <div class="ingredient-aka">found in: Cetaphil SPF, ELF foundation</div>
+        <div class="ingredient-tags">
+          <span class="tag spf">SPF</span>
+        </div>
+      </div>
+      <div class="ingredient-body">
+        <div class="ingredient-what">A mineral UV filter that sits on top of skin and physically reflects UV rays.</div>
+        <div class="ingredient-benefit">Broad spectrum UVA/UVB protection · Works immediately on application · Stays on skin surface rather than absorbing · Gentler than chemical UV filters · No hormonal disruption concern · Often causes white cast</div>
+        <div class="related-note">Works alongside zinc oxide for complete mineral sun protection</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- V -->
+  <div class="alpha-group" id="V">
+    <div class="alpha-letter">V</div>
+
+    <div class="ingredient" data-tags="brightening anti-aging">
+      <div>
+        <div class="ingredient-name">Vitamin C (L-Ascorbic Acid)</div>
+        <div class="ingredient-aka">not currently in your routine</div>
+        <div class="ingredient-tags">
+          <span class="tag brightening">brightening</span>
+          <span class="tag anti-aging">anti-aging</span>
+          <span class="tag anti-inflammatory">anti-inflammatory</span>
+        </div>
+      </div>
+      <div class="ingredient-body">
+        <div class="ingredient-what">A potent antioxidant and collagen synthesis stimulator. Also consumed orally for systemic skin benefits.</div>
+        <div class="ingredient-benefit">Stimulates collagen synthesis · Neutralizes free radicals at skin surface · Brightens hyperpigmentation · Oral vitamin C contributes to collagen production systemically from inside out · Topical and oral work through different pathways and are complementary</div>
+        <div class="skin-note">Formulation is critical — L-ascorbic acid oxidizes rapidly and requires low pH which can irritate inflamed skin. Lower priority for now. Revisit once inflammation is controlled.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Z -->
+  <div class="alpha-group" id="Z">
+    <div class="alpha-letter">Z</div>
+
+    <div class="ingredient" data-tags="anti-inflammatory anti-acne">
+      <div>
+        <div class="ingredient-name">Zinc Gluconate</div>
+        <div class="ingredient-aka">found in: Cicaplast Balm B5+</div>
+        <div class="ingredient-tags">
+          <span class="tag anti-inflammatory">anti-inflammatory</span>
+          <span class="tag anti-acne">anti-acne</span>
+        </div>
+      </div>
+      <div class="ingredient-body">
+        <div class="ingredient-what">A bioavailable form of zinc — the gluconate salt form is more easily absorbed than basic zinc. Zinc is an essential mineral involved in skin healing, immune function, and sebum regulation.</div>
+        <div class="ingredient-benefit">Antimicrobial — inhibits P. acnes bacteria · Anti-inflammatory · Supports wound healing · Helps regulate sebum production · Works synergistically with azelaic acid and vitamin B6 for DHT inhibition at low concentrations · Gentler on skin than zinc oxide while still delivering zinc's skin benefits</div>
+        <div class="related-note">Works synergistically with azelaic acid and vitamin B6 for DHT/5-alpha-reductase inhibition</div>
+      </div>
+    </div>
+
+    <div class="ingredient" data-tags="spf anti-inflammatory anti-acne">
+      <div>
+        <div class="ingredient-name">Zinc Oxide</div>
+        <div class="ingredient-aka">found in: Cetaphil SPF, ELF foundation</div>
+        <div class="ingredient-tags">
+          <span class="tag spf">SPF</span>
+          <span class="tag anti-inflammatory">anti-inflammatory</span>
+        </div>
+      </div>
+      <div class="ingredient-body">
+        <div class="ingredient-what">A mineral UV filter and the gold standard for sensitive, inflamed, or acne-prone skin. Sits on skin surface and physically reflects UV radiation.</div>
+        <div class="ingredient-benefit">Broad spectrum UVA/UVB protection · Works immediately on application · Mildly anti-inflammatory — a bonus for your chronically inflamed skin · Does not absorb into bloodstream · No endocrine disruption concern · Stays on skin surface · SPF of 24% concentration as in your spray SPF provides robust protection</div>
+        <div class="related-note">Works synergistically with azelaic acid and vitamin B6 for DHT inhibition at low concentrations</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ==================== FUNCTIONAL-ONLY INGREDIENTS ==================== -->
+  <div class="section-header" id="functional" style="margin-top: 80px;">
+    <h2 class="section-title" style="color: var(--warn);">Functional-Only Ingredients</h2>
+    <div class="section-line" style="background: rgba(196,149,122,0.2);"></div>
+    <span class="section-count" style="color: var(--warn);">no skin benefit</span>
+  </div>
+
+  <p style="font-size: 0.65rem; color: var(--text3); margin-bottom: 32px; line-height: 1.7;">These ingredients perform necessary roles in product formulation — preserving, emulsifying, thickening, or stabilizing — but provide no direct benefit to your skin. They are not harmful (with exceptions noted), just functionally neutral from a skincare standpoint.</p>
+
+  <div class="alpha-group">
+
+    <div class="avoid-ingredient">
+      <div class="avoid-name">Behentrimonium Methosulfate</div>
+      <div class="avoid-body">Emulsifier — helps oil and water mix together in a formula. Common in CeraVe products. No skin benefit, just keeps the product stable and consistent in texture.</div>
+    </div>
+
+    <div class="avoid-ingredient">
+      <div class="avoid-name">Carbomer</div>
+      <div class="avoid-body">Thickening agent — creates gel-like texture. Found in many of your products. Purely a texture and consistency agent. No skin benefit.</div>
+    </div>
+
+    <div class="avoid-ingredient">
+      <div class="avoid-name">Caprylyl Glycol</div>
+      <div class="avoid-body">Preservative booster — extends the effectiveness of other preservatives. Also has very mild moisturizing properties but not at concentrations used. Primarily functional.</div>
+    </div>
+
+    <div class="avoid-ingredient">
+      <div class="avoid-name">Cetearyl Alcohol / Cetyl Alcohol</div>
+      <div class="avoid-body">Fatty alcohols — despite the name, these are not drying like rubbing alcohol. They are emollients and emulsifiers that give creams a smooth texture. Not the same category as irritating alcohols. No active skin benefit.</div>
+    </div>
+
+    <div class="avoid-ingredient">
+      <div class="avoid-name">Dimethicone</div>
+      <div class="avoid-body">Silicone — creates a smooth, slip-like feel on skin and forms a light occlusive barrier to seal moisture in. Not harmful and mildly beneficial in barrier sealing, but primarily a texture and feel agent. Can feel heavy for some oily skin types.</div>
+    </div>
+
+    <div class="avoid-ingredient">
+      <div class="avoid-name">Ethylhexylglycerin</div>
+      <div class="avoid-body">Preservative booster with mild skin conditioning properties — helps other preservatives work more effectively and improves product spreadability. Considered safe and gentle. Functionally neutral from a treatment standpoint.</div>
+    </div>
+
+    <div class="avoid-ingredient">
+      <div class="avoid-name">Fragrance / Parfum</div>
+      <div class="avoid-body" style="color: var(--warn);">The most common hidden irritant in skincare. Serves no functional benefit to your skin — purely aesthetic. A single "fragrance" listing can represent dozens of undisclosed chemical compounds. Particularly problematic for inflamed, sensitive, or acne-prone skin. Avoid wherever possible — this is a genuine recommendation, not just caution.</div>
+    </div>
+
+    <div class="avoid-ingredient">
+      <div class="avoid-name">Glyceryl Stearate</div>
+      <div class="avoid-body">Emulsifier — helps bind oil and water phases of a formula. No skin benefit. Very commonly used and well tolerated.</div>
+    </div>
+
+    <div class="avoid-ingredient">
+      <div class="avoid-name">Methylparaben / Propylparaben</div>
+      <div class="avoid-body" style="color: var(--warn);">Preservatives from the paraben family. Considered safe at cosmetic concentrations by regulatory standards. However they are weak estrogen mimickers (endocrine disruptors) at high doses. Given your active hormonal investigation, minimizing additional potential endocrine-disrupting inputs is a reasonable precaution even if the actual risk at cosmetic concentrations is low. Found in CeraVe Daily Moisturizing Lotion (body) — the Soothing Body Wash is paraben-free.</div>
+    </div>
+
+    <div class="avoid-ingredient">
+      <div class="avoid-name">Phenoxyethanol</div>
+      <div class="avoid-body">Very common preservative — prevents bacterial and fungal growth in products. Found in many of your products. Considered safe at concentrations up to 1%. No skin benefit. Generally well tolerated though some sensitive individuals react to it.</div>
+    </div>
+
+    <div class="avoid-ingredient">
+      <div class="avoid-name">Polysorbate 20 / 60</div>
+      <div class="avoid-body">Emulsifiers and surfactants — help ingredients mix and spread evenly. No skin benefit. Well tolerated.</div>
+    </div>
+
+    <div class="avoid-ingredient">
+      <div class="avoid-name">Sodium Benzoate</div>
+      <div class="avoid-body">Preservative. No skin benefit. Well tolerated in most people. Can form benzene when combined with vitamin C in acidic environments, but concentrations in cosmetics are considered safe by regulatory bodies.</div>
+    </div>
+
+    <div class="avoid-ingredient">
+      <div class="avoid-name">Sodium Lauryl Sulfate (SLS)</div>
+      <div class="avoid-body" style="color: var(--warn);">Harsh surfactant — strips skin barrier aggressively. Avoid in cleansers for your skin type. Most of your current products wisely avoid it. Not in your current routine but worth knowing to check for when purchasing new cleansers.</div>
+    </div>
+
+    <div class="avoid-ingredient">
+      <div class="avoid-name">Xanthan Gum</div>
+      <div class="avoid-body">Natural thickener and stabilizer derived from fermentation. Gives products a gel-like consistency. No skin benefit. Completely inert and well tolerated.</div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function filterIngredients() {
+  const query = document.getElementById('searchInput').value.toLowerCase();
+  const ingredients = document.querySelectorAll('.ingredient, .avoid-ingredient, .ingredient-group');
+  ingredients.forEach(el => {
+    const text = el.textContent.toLowerCase();
+    el.classList.toggle('hidden', query.length > 0 && !text.includes(query));
+  });
+  // Show/hide alpha letters
+  document.querySelectorAll('.alpha-group').forEach(group => {
+    const visible = group.querySelectorAll('.ingredient:not(.hidden), .avoid-ingredient:not(.hidden), .ingredient-group:not(.hidden)');
+    group.style.display = visible.length === 0 && query.length > 0 ? 'none' : '';
+  });
+}
+
+function filterByTag(tag) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  const ingredients = document.querySelectorAll('.ingredient');
+  ingredients.forEach(el => {
+    if (tag === 'all') {
+      el.classList.remove('hidden');
+    } else {
+      const tags = el.dataset.tags || '';
+      el.classList.toggle('hidden', !tags.includes(tag));
+    }
+  });
+  document.querySelectorAll('.alpha-group').forEach(group => {
+    const visible = group.querySelectorAll('.ingredient:not(.hidden)');
+    group.style.display = (tag !== 'all' && visible.length === 0) ? 'none' : '';
+  });
+}
+</script>
+
+</body>
+</html>
